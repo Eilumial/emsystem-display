@@ -1,0 +1,31 @@
+.sidebar {
+  /* background: linear-gradient(
+    rgba(255, 255, 255, 0.7),
+    rgba(255, 255, 255, 0.3)
+  ); */
+  /* background-color: blueviolet;
+   */
+   background-image: linear-gradient(to right, rgb(229, 168, 255), rgb(253, 222, 253));
+   border: 2px black solid;
+   height: 40px;
+}
+
+.sidebar button {
+  width: 10%;
+  height: 25px;
+  /* padding: 10px; */
+  border: 2px white solid;
+  background-color: rgb(166, 102, 230);
+  color: white;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  margin-top: 8px;
+  /* margin-bottom: 30px; */
+  margin-right: 5px;
+}
+
+.sidebar button:hover{
+      background-color: rgb(136, 22, 250);
+}
