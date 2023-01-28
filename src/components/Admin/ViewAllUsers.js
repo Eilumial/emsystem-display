@@ -76,9 +76,16 @@ var initUserList = [
 export const ViewAllUsers = () => {
   let [userList, setUserList] = useState(initUserList);
   const [updateState, setUpdateState] = useState(-1);
+  const [empID, setEmpID] = useState(-1);
   // const [username, setUsername] = useState("");
   // const [password, setPassword] = useState("");
-
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [age, setAge] = useState(0);
+  const [gender, setGender] = useState("");
+  const [salary, setSalary] = useState(0.0);
+  const [email, setEmail] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
   const navigate = useNavigate();
   let contextData = useContext(ContextHook);
   contextData.setJwt(Cookies.get("jwt"));
@@ -115,8 +122,6 @@ export const ViewAllUsers = () => {
       });
   };
 
-  
-
   const ageOptions = [];
   for (let i = 15; i <= 99; i++) {
     ageOptions.push(i);
@@ -124,92 +129,136 @@ export const ViewAllUsers = () => {
 
   function handleSubmit(item) {
     setUpdateState(item.userEntity.id);
+    setEmpID(item.id);
+    setFirstName(item.first_name);
+    setLastName(item.last_name);
+    setAge(item.age);
+    setGender(item.gender);
+    setSalary(item.salary);
+    setEmail(item.email);
   }
-  // const [firstName, setFirstName] = useState("");
-  // const [lastName, setLastName] = useState("");
-  // const [age, setAge] = useState(0);
-  // const [gender, setGender] = useState("");
-  // const [email, setEmail] = useState("");
+
   function EditList({ item }) {
     return (
-      <tr>
-        <td>
-          <input
-            type="text"
-            name="username"
-            defaultValue={item.userEntity.username}
-            disabled
-          ></input>
-        </td>
-        <td>
-          <input
-            type="text"
-            name="firstName"
-            pattern="^[A-Za-z]+$"
-            defaultValue={item.first_name}
-            // onChange={(e) => setFirstName(e.target.value)}
-            required
-          ></input>
-        </td>
-        <td>
-          <input
-            type="text"
-            name="lastName"
-            pattern="^[A-Za-z]+$"
-            defaultValue={item.last_name}
-            // onChange={(e) => setLastName(e.target.value)}
-            required
-          ></input>
-        </td>
-        <td>
-          <select
-            defaultValue={item.age}
-            // onChange={(e) => setAge(e.target.value)}
-            required
-          >
-            <option value="" disabled>
-              Age
-            </option>
-            {ageOptions.map((age) => (
-              <option key={age} value={age}>
-                {age}
-              </option>
-            ))}
-          </select>
-        </td>
-        <td>
-          <select
-            defaultValue={item.gender}
-            // onChange={(e) => setGender(e.target.value)}
-            required
-          >
-            <option value="" disabled>
-              Gender
-            </option>
-            <option key={"male"}>Male</option>
-            <option key={"female"}>Female</option>
-            <option key={"other"}>Other</option>
-          </select>
-        </td>
-        <td>
-          <input
-            type="email"
-            name="email"
-            label="Email"
-            defaultValue={item.email}
-            // onChange={(e) => setEmail(e.target.value)}
-            required
-          ></input>
-        </td>
-        <td>
-          <button>Update</button>
-        </td>
-        <td></td>
-      </tr>
+      <></>
+      // <tr>
+      //   <td>
+      //     <input
+      //       type="text"
+      //       name="username"
+      //       defaultValue={item.userEntity.username}
+      //       disabled
+      //     ></input>
+      //   </td>
+      //   <td>
+      //     <input
+      //       type="text"
+      //       name="firstName"
+      //       pattern="^[A-Za-z]+$"
+      //       defaultValue={item.first_name}
+      //       onChange={(e) => setFirstName(e.target.value)}
+      //       required
+      //     ></input>
+      //   </td>
+      //   <td>
+      //     <input
+      //       type="text"
+      //       name="lastName"
+      //       pattern="^[A-Za-z]+$"
+      //       defaultValue={item.last_name}
+      //       // onChange={(e) => setLastName(e.target.value)}
+      //       required
+      //     ></input>
+      //   </td>
+      //   <td>
+      //     <select
+      //       defaultValue={item.age}
+      //       // onChange={(e) => setAge(e.target.value)}
+      //       required
+      //     >
+      //       <option value="" disabled>
+      //         Age
+      //       </option>
+      //       {ageOptions.map((age) => (
+      //         <option key={age} value={age}>
+      //           {age}
+      //         </option>
+      //       ))}
+      //     </select>
+      //   </td>
+      //   <td>
+      //     <select
+      //       defaultValue={item.gender}
+      //       // onChange={(e) => setGender(e.target.value)}
+      //       required
+      //     >
+      //       <option value="" disabled>
+      //         Gender
+      //       </option>
+      //       <option key={"male"}>Male</option>
+      //       <option key={"female"}>Female</option>
+      //       <option key={"other"}>Other</option>
+      //     </select>
+      //   </td>
+      //   <td>
+      //     <input
+      //       type="email"
+      //       name="email"
+      //       label="Email"
+      //       defaultValue={item.email}
+      //       // onChange={(e) => setEmail(e.target.value)}
+      //       required
+      //     ></input>
+      //   </td>
+      //   <td>
+      //     <button>Update</button>
+      //   </td>
+      //   <td></td>
+      // </tr>
     );
   }
 
-  const editHandler = (item, index) => {};
+  const editHandler = () => {
+    // updateState
+
+    // let item = bookList[indx];
+    const headers = {
+      Authorization: `Bearer ${Cookies.get("jwt")}`,
+      "Content-Type": "application/json",
+    };
+
+    fetch(process.env.REACT_APP_SERVER_EMP_URL + "/update" + `/${empID}`, {
+      method: "PUT",
+      headers: headers,
+      body: JSON.stringify({
+        first_name: firstName,
+        last_name: lastName,
+        age: age,
+        gender: gender,
+        salary: salary,
+        email: email,
+      }),
+      // headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.errorMessage != null) {
+          setErrorMsg("Error: " + data.errorMessage);
+        } else {
+          setErrorMsg("");
+          setUpdateState(-1);
+          setEmpID(-1);
+        }
+        getAllDataFromDB();
+        // console.log(data);
+        // const newArr = [...bookList];
+        // newArr[indx] = bookInputs;
+        // setBookList(newArr);
+        // setIndx(-1);
+        // clearInput();
+      });
+  };
 
   const delHandler = (item) => {
     // var item = [index];
@@ -235,7 +284,14 @@ export const ViewAllUsers = () => {
 
   return (
     <div className="app">
-      <form>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          editHandler();
+        }}
+      >
+        {/* <form> */}
+        {errorMsg}
         <table border="0" cellPadding="10">
           <thead>
             <tr>
@@ -245,6 +301,7 @@ export const ViewAllUsers = () => {
               <th>Age</th>
               <th>Gender</th>
               <th>Email</th>
+              <th>Salary</th>
               <th>Edit</th>
               <th>Delete</th>
             </tr>
@@ -270,7 +327,97 @@ export const ViewAllUsers = () => {
               )
               .map((item) =>
                 updateState === item.userEntity.id ? (
-                  <EditList item={item} />
+                  <tr>
+                    <td>
+                      <input
+                        type="text"
+                        name="username"
+                        defaultValue={item.userEntity.username}
+                        disabled
+                      ></input>
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        name="firstName"
+                        pattern="^[A-Za-z]+$"
+                        defaultValue={item.first_name}
+                        onChange={(e) => setFirstName(e.target.value)}
+                        required
+                      ></input>
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        name="lastName"
+                        pattern="^[A-Za-z]+$"
+                        defaultValue={item.last_name}
+                        onChange={(e) => setLastName(e.target.value)}
+                        required
+                      ></input>
+                    </td>
+                    <td>
+                      <select
+                        defaultValue={item.age}
+                        onChange={(e) => setAge(e.target.value)}
+                        required
+                      >
+                        <option value="" disabled>
+                          Age
+                        </option>
+                        {ageOptions.map((age) => (
+                          <option key={age} value={age}>
+                            {age}
+                          </option>
+                        ))}
+                      </select>
+                    </td>
+                    <td>
+                      <select
+                        defaultValue={item.gender}
+                        onChange={(e) => setGender(e.target.value)}
+                        required
+                      >
+                        <option value="" disabled>
+                          Gender
+                        </option>
+                        <option key={"male"}>Male</option>
+                        <option key={"female"}>Female</option>
+                        <option key={"other"}>Other</option>
+                      </select>
+                    </td>
+                    <td>
+                      <input
+                        type="email"
+                        name="email"
+                        label="Email"
+                        defaultValue={item.email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                      ></input>
+                    </td>
+                    <td>
+                      <input
+                        type="number"
+                        name="salary"
+                        label="Salary"
+                        defaultValue={item.salary.toFixed(2)}
+                        onChange={(e) =>
+                          setSalary(Number(e.target.value).toFixed(2))
+                        }
+                        min="0"
+                        step=".01"
+                        required
+                      ></input>
+                    </td>
+                    <td>
+                      <button type="submit">Update</button>
+                      {/* <button type="button" onClick={() => editHandler()}>
+                        Update
+                      </button> */}
+                    </td>
+                    <td></td>
+                  </tr>
                 ) : (
                   <tr key={item.id}>
                     <td>{item.userEntity.username}</td>
@@ -279,6 +426,7 @@ export const ViewAllUsers = () => {
                     <td>{item.age}</td>
                     <td>{item.gender}</td>
                     <td>{item.email}</td>
+                    <td>{item.salary}</td>
 
                     <td>
                       <button
@@ -291,6 +439,7 @@ export const ViewAllUsers = () => {
                     </td>
                     <td>
                       <button type="button" onClick={() => delHandler(item)}>
+                        {/* <button type="submit"> */}
                         Delete
                       </button>
                     </td>

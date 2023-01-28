@@ -81,6 +81,12 @@ export default function Sidebar(props) {
           <a href="/viewalluser">
             <button>View All Users</button>
           </a>
+          <a href="/managedeplist">
+            <button>Department List</button>
+          </a>
+          <a href="/manageuserdep">
+            <button>User Departments</button>
+          </a>
           Protected User Panel
           <a href="/protected">
             <button>Protected</button>

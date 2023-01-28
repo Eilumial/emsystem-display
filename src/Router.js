@@ -26,6 +26,8 @@ import RegisterUser from "./components/Registration/RegisterUser";
 import Sidebar from "./components/Global/Sidebar";
 import Cookies from "js-cookie";
 import { ViewAllUsers } from "./components/Admin/ViewAllUsers";
+import ManageDepartmentList from "./components/Departments/ManageDepartmentList";
+import ManageUserDepartments from "./components/Departments/ManageUserDepartments";
 
 export var ContextHook = createContext();
 
@@ -117,6 +119,8 @@ export default function Router() {
             <>
               <Route path="/admin" element={<Admin />} />
               <Route path="/viewalluser" element={<ViewAllUsers />} />
+              <Route path="/managedeplist" element={<ManageDepartmentList/>}/>
+              <Route path="/manageuserdep" element={<ManageUserDepartments/>}/>
             </>
           )}
 
