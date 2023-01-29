@@ -89,8 +89,8 @@ function ManageUserProjects() {
   const [errorMsg, setErrorMsg] = useState("");
   const [searched, setSearched] = useState(false);
   const [roleInput, setRoleInput] = useState("");
-
-  var userEmail = "";
+  const [userEmail, setUserEmail] = useState("");
+  
 
   useEffect(() => {
     const headers = {
@@ -130,7 +130,7 @@ function ManageUserProjects() {
       "Content-Type": "application/json",
     };
     //     console.log("User Email: " + userEmail);
-    fetch(process.env.REACT_APP_SERVER_EMP_URL + "/e" + `/${searchInput}`, {
+    fetch(process.env.REACT_APP_SERVER_EMP_URL + "/e" + `/${userEmail}`, {
       method: "GET",
       headers: headers,
     })
@@ -159,7 +159,7 @@ function ManageUserProjects() {
 
         setName(userList[0].projects.map((project) => project.project_name));
         setSearched(true);
-        userEmail = searchInput;
+        setUserEmail(searchInput);
 
       });
   }
@@ -326,6 +326,7 @@ function ManageUserProjects() {
           type="email"
           onChange={(e) => setSearchInput(e.target.value)}
           placeholder="Search by Employee Email"
+          style={{ width: "300px", height: "30px" }}
           required
         ></input>
         <button type="submit">Search</button>

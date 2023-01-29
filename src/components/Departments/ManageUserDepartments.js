@@ -89,8 +89,7 @@ function ManageUserDepartments() {
    const [errorMsg, setErrorMsg] = useState("");
    const [searched, setSearched] = useState(false);
    const [roleInput, setRoleInput] = useState("");
-
-   var userEmail = "";
+   const [userEmail, setUserEmail] = useState("");
 
    useEffect(() => {
       const headers = {
@@ -130,7 +129,7 @@ function ManageUserDepartments() {
          "Content-Type": "application/json",
       };
       //     console.log("User Email: " + userEmail);
-      fetch(process.env.REACT_APP_SERVER_EMP_URL + "/e" + `/${searchInput}`, {
+      fetch(process.env.REACT_APP_SERVER_EMP_URL + "/e" + `/${userEmail}`, {
          method: "GET",
          headers: headers,
       })
@@ -163,7 +162,7 @@ function ManageUserDepartments() {
                userList[0].departments.map((department) => department.role)
             );
             setSearched(true);
-            userEmail = searchInput;
+            setUserEmail(searchInput);
             //   console.log("After roles"+roles);
             //   setUserList(prevList=>[...prevList]);
             //   console.log("Before roles"+depList);
@@ -189,11 +188,11 @@ function ManageUserDepartments() {
          const selectedOption = depList.find((item) => {
             // console.log("Item role: "+item.role);
             // console.log("Item id: "+item.id);
-            console.log("Select role: "+ selectedRole);
+            console.log("Select role: " + selectedRole);
             return item.role === selectedRole;
          });
-             console.log("SOID: "+selectedOption.id)
-             console.log("SORole: "+selectedOption.role)
+         console.log("SOID: " + selectedOption.id);
+         console.log("SORole: " + selectedOption.role);
          setSelectedId(selectedOption.id);
          //     console.log("ID:" + selectedId);
          //     console.log("Role:" + selectedRole);
@@ -356,6 +355,7 @@ function ManageUserDepartments() {
                type="email"
                onChange={(e) => setSearchInput(e.target.value)}
                placeholder="Search by Employee Email"
+               style={{ width: "300px", height: "30px" }}
                required
             ></input>
             <button type="submit">Search</button>
@@ -370,7 +370,7 @@ function ManageUserDepartments() {
 
                {/* <select> */}
                <select
-               className="depselect"
+                  className="depselect"
                   defaultValue=""
                   onChange={(e) => setSelectedRole(e.target.value)}
                >

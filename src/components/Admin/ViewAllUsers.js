@@ -280,14 +280,16 @@ export const ViewAllUsers = () => {
          )
             .then((res) => res.text())
             .then((data) => {
-               if (
-                  item.userEntity.username.toLowerCase() ===
-                  Cookies.get("username").toLowerCase()
-               ) {
-                  logoutHandler();
-               } else {
-                  getAllDataFromDB();
-               }
+               getAllDataFromDB();
+
+               //  if (
+               //     item.userEntity.username.toLowerCase() ===
+               //     Cookies.get("username").toLowerCase()
+               //  ) {
+               //     logoutHandler();
+               //  } else {
+               //     getAllDataFromDB();
+               //  }
             });
       }
    };
@@ -351,7 +353,7 @@ export const ViewAllUsers = () => {
    return (
       <div className="app">
          <form
-         className="allusers"
+            className="allusers"
             onSubmit={(e) => {
                e.preventDefault();
                editHandler();
@@ -487,7 +489,9 @@ export const ViewAllUsers = () => {
                                  ></input>
                               </td>
                               <td>
-                                 <button className="edit" type="submit">Update</button>
+                                 <button className="edit" type="submit">
+                                    Update
+                                 </button>
                                  {/* <button type="button" onClick={() => editHandler()}>
                         Update
                       </button> */}
@@ -497,16 +501,14 @@ export const ViewAllUsers = () => {
                               <td>
                                  {new Date(
                                     item.lastModifiedOn
-                                 )
-                                 .toLocaleDateString("en-US", {
+                                 ).toLocaleDateString("en-US", {
                                     year: "numeric",
                                     month: "short",
                                     day: "numeric",
                                     hour: "numeric",
                                     minute: "numeric",
                                     hour12: true,
-                                 })
-                                 }
+                                 })}
                               </td>
                            </tr>
                         ) : (
@@ -530,29 +532,30 @@ export const ViewAllUsers = () => {
                                  </button>
                               </td>
                               <td>
-                                 <button
-                                    type="button"
-                                    className="delete"
-                                    onClick={() => delHandler(item)}
-                                 >
-                                    {/* <button type="submit"> */}
-                                    Delete
-                                 </button>
+                                 {item.userEntity.username.toLowerCase() !==
+                                    Cookies.get("username").toLowerCase() && (
+                                    <button
+                                       type="button"
+                                       className="delete"
+                                       onClick={() => delHandler(item)}
+                                    >
+                                       {/* <button type="submit"> */}
+                                       Delete
+                                    </button>
+                                 )}
                               </td>
                               <td>{item.lastModifiedBy}</td>
                               <td>
                                  {new Date(
                                     item.lastModifiedOn
-                                 )
-                                 .toLocaleDateString("en-US", {
+                                 ).toLocaleDateString("en-US", {
                                     year: "numeric",
                                     month: "short",
                                     day: "numeric",
                                     hour: "numeric",
                                     minute: "numeric",
                                     hour12: true,
-                                 })
-                                 }
+                                 })}
                               </td>
                            </tr>
                         )

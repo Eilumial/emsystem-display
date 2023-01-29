@@ -32,6 +32,7 @@ import ManageProjectList from "./components/Projects/ManageProjectList";
 import ManageUserProjects from "./components/Projects/ManageUserProjects";
 import ManageDepartmentEmp from "./components/Departments/ManageDepartmentEmp";
 import ManageProjectEmp from "./components/Projects/ManageProjectEmp";
+import UserCP from "./components/UserCP/UserCP";
 
 export var ContextHook = createContext();
 
@@ -129,6 +130,8 @@ export default function Router() {
               <Route path="/manageprojlist" element={<ManageProjectList/>}/>
               <Route path="/manageuserproj" element={<ManageUserProjects/>}/>
               <Route path="/manageprojemp" element={<ManageProjectEmp/>}/>
+              <Route path="/usercp" element={<UserCP/>}/>
+
               
               
             </>

@@ -83,7 +83,7 @@ export default function Sidebar(props) {
             <button>Admin</button>
           </a> */}
           <a href="/viewalluser">
-            <button>View All Users</button>
+            <button>User List</button>
           </a>
           <a href="/managedeplist">
             <button>Department List</button>
@@ -103,6 +103,10 @@ export default function Sidebar(props) {
           <a href="/manageprojemp">
             <button>Project Members</button>
           </a>
+          <a href="/usercp">
+            <button>User CP</button>
+          </a>
+          
 
 
           

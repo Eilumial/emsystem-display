@@ -193,6 +193,7 @@ export default function RegisterUser() {
         <br />
 
         <button className="submit">Submit</button>
+        {errorMsg}
       </form>
     </div>
 
