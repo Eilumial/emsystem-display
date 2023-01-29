@@ -37,7 +37,7 @@ input:invalid[focused="true"] {
 input:invalid[focused="true"] ~ span {
   display: block;
 }
-
+/* 
 .app {
   display: flex;
   align-items: center;
@@ -50,7 +50,7 @@ input:invalid[focused="true"] ~ span {
     url("https://images.pexels.com/photos/114979/pexels-photo-114979.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500");
   background-size: cover;
   background-position: center;
-}
+} */
 
 form.login {
   background-color: white;

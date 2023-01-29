@@ -1,0 +1,22 @@
+.depselect {
+   padding: 5px;
+   margin: 5px 0px;
+   width: 180px;
+   border-radius: 5px;
+   border: 1px solid gray;
+}
+
+input {
+   padding: 5px;
+   margin: 5px 0px;
+   width: 120px;
+   border-radius: 5px;
+   border: 1px solid gray;
+}
+
+.deplisttable {
+   width: 500px;
+   height: 300px;
+   overflow-x: scroll;
+   overflow-y: scroll;
+}

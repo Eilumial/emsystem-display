@@ -160,10 +160,11 @@ export default function RegisterUser() {
 
   return (
     <div className="app">
-      <form onSubmit={registerHandler}>
+      <form className="reguserform" onSubmit={registerHandler}>
         <h1>Register User</h1>
         {inputs.map((input) => (
           <FormInput
+          
             key={input.id}
             {...input}
             value={values[input.name]}

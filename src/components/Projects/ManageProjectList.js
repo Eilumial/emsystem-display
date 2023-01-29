@@ -3,23 +3,23 @@ import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import { ContextHook } from "../../Router";
 
-var initDepList = [
+var initProjList = [
   {
     createdBy: "",
     createdOn: "",
     lastModifiedBy: "",
     lastModifiedOn: "",
     id: 0,
-    role: "",
+    projectName: "",
   },
 ];
 
-function ManageDepartmentList() {
-  const [depList, SetDepList] = useState(initDepList);
+function ManageProjectList() {
+  const [projList, setProjList] = useState(initProjList);
   const [searchInput, setSearchInput] = useState("");
   const [addInput, setAddInput] = useState("");
   const [updateState, setUpdateState] = useState(-1);
-  const [roleInput, setRoleInput] = useState("");
+  const [nameInput, setNameInput] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
 
   // let contextData = useContext(ContextHook);
@@ -30,13 +30,13 @@ function ManageDepartmentList() {
       Authorization: `Bearer ${Cookies.get("jwt")}`,
     };
 
-    fetch(`http://localhost:8080/ems/dep/list`, {
+    fetch(process.env.REACT_APP_SERVER_PROJ_URL + "/list", {
       method: "GET",
       headers: headers,
     })
       .then((res) => res.json())
       .then((data) => {
-        SetDepList(data);
+        setProjList(data);
       });
   }, []);
 
@@ -45,35 +45,36 @@ function ManageDepartmentList() {
       Authorization: `Bearer ${Cookies.get("jwt")}`,
     };
 
-    fetch(`http://localhost:8080/ems/dep/list`, {
+    fetch(process.env.REACT_APP_SERVER_PROJ_URL + "/list", {
       method: "GET",
       headers: headers,
     })
       .then((res) => res.json())
       .then((data) => {
-        SetDepList(data);
+        setProjList(data);
       });
   };
 
   function editStatus(item) {
     setUpdateState(item.id);
-    // setRoleInput(item.role);
+    // setNameInput(item.projectName);
   }
+
   function updateHandler() {
-    if (roleInput.length > 0) {
+    if (nameInput.length > 0) {
       const headers = {
         Authorization: `Bearer ${Cookies.get("jwt")}`,
         "Content-Type": "application/json",
       };
 
       fetch(
-        process.env.REACT_APP_SERVER_DEP_URL + "/list" + `/${updateState}`,
+        process.env.REACT_APP_SERVER_PROJ_URL + "/list" + `/${updateState}`,
         {
           method: "PUT",
           headers: headers,
           body: JSON.stringify({
             id: updateState,
-            role: roleInput,
+            projectName: nameInput,
           }),
           // headers: { "Content-Type": "application/json" },
         }
@@ -81,8 +82,8 @@ function ManageDepartmentList() {
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
-          if (data.role == null) {
-            setErrorMsg("Error: Department does not exist or duplicate Department name.");
+          if (data.projectName == null) {
+            setErrorMsg("Error: Project does not exist or duplicate Project name.");
           } else {
             setErrorMsg("");
             setUpdateState(-1);
@@ -95,8 +96,8 @@ function ManageDepartmentList() {
           // setIndx(-1);
           // clearInput();
         });
-    }else{
-      setErrorMsg("Department name must not be empty");
+    } else {
+      setErrorMsg("Project name must not be empty");
     }
   }
 
@@ -107,11 +108,11 @@ function ManageDepartmentList() {
         "Content-Type": "application/json",
       };
 
-      fetch(process.env.REACT_APP_SERVER_DEP_URL + "/list", {
+      fetch(process.env.REACT_APP_SERVER_PROJ_URL + "/list", {
         method: "POST",
         headers: headers,
         body: JSON.stringify({
-          role: addInput,
+          projectName: addInput,
         }),
         // headers: { "Content-Type": "application/json" },
       })
@@ -133,7 +134,7 @@ function ManageDepartmentList() {
           // clearInput();
         });
     } else {
-      setErrorMsg("Department name must not be empty");
+      setErrorMsg("Project name must not be empty");
     }
   }
 
@@ -141,14 +142,14 @@ function ManageDepartmentList() {
     const headers = {
       Authorization: `Bearer ${Cookies.get("jwt")}`,
     };
-    if (window.confirm(`Are you sure you want to delete ${item.role}?`)) {
-      fetch(process.env.REACT_APP_SERVER_DEP_URL + "/list" + `/${item.id}`, {
+    if (window.confirm(`Are you sure you want to delete ${item.projectName}?`)) {
+      fetch(process.env.REACT_APP_SERVER_PROJ_URL + "/list" + `/${item.id}`, {
         method: "DELETE",
         headers: headers,
       })
         .then((res) => res.text())
         .then((data) => {
-          setErrorMsg(data.replace("*name*", item.role));
+          setErrorMsg(data.replace("*name*", item.projectName));
           getAllDataFromDB();
         });
     }
@@ -186,19 +187,19 @@ function ManageDepartmentList() {
             name="add"
             onChange={(e) => setAddInput(e.target.value)}
             value={addInput}
-            placeholder="Add Department"
+            placeholder="Add Project"
           />
           <button type="button" onClick={() => addHandler()}>
             Add
           </button>
-          
+
           <br />
           {/* <label>Search</label> */}
           <input
             type="text"
             name="search"
             onChange={(e) => setSearchInput(e.target.value)}
-            placeholder="Search Departments"
+            placeholder="Search Projects"
           />
           {/* {!editMode<0 ? (
             <button type="button" onClick={() => updateHandler()}>
@@ -211,31 +212,30 @@ function ManageDepartmentList() {
           )} */}
         </form>
         {errorMsg}
-        <div style={{overflow: 'scroll', maxHeight: '700px', maxWidth: '800px'}}>
-        <table className="deplisttable">
+        <table>
           <thead>
             <tr>
-              <th>Department Name</th>
+              <th>Project Name</th>
               <th></th>
               <th></th>
             </tr>
           </thead>
           <tbody>
-            {depList
+            {projList
               .filter((item) =>
-                item.role.toLowerCase().includes(searchInput.toLowerCase())
+                item.projectName.toLowerCase().includes(searchInput.toLowerCase())
               )
               // .sort((a, b) => a.projectId.id - b.projectId.id)
-              .sort((a,b)=>a.role.localeCompare(b.role))
+              .sort((a,b)=>a.projectName.localeCompare(b.projectName))
               .map((item) =>
                 updateState === item.id ? (
                   <tr key={item.id}>
                     <td>
                       <input
                         type="text"
-                        name="role"
-                        defaultValue={item.role}
-                        onChange={(e) => setRoleInput(e.target.value)}
+                        name="projectName"
+                        defaultValue={item.projectName}
+                        onChange={(e) => setNameInput(e.target.value)}
                         required
                       ></input>
                     </td>
@@ -252,7 +252,7 @@ function ManageDepartmentList() {
                   </tr>
                 ) : (
                   <tr key={item.id}>
-                    <td>{item.role}</td>
+                    <td>{item.projectName}</td>
                     <td>
                       <button onClick={() => editStatus(item)}>Edit</button>
                     </td>
@@ -264,10 +264,9 @@ function ManageDepartmentList() {
               )}
           </tbody>
         </table>
-        </div>
       </div>
     </div>
   );
 }
 
-export default ManageDepartmentList;
+export default ManageProjectList;

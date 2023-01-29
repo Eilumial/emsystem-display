@@ -1,4 +1,4 @@
-table {
+/* table {
   background-color: white;
   padding: 10px 10px;
   border-radius: 10px;
@@ -6,4 +6,144 @@ table {
 
 td, th {
       background-color: rgb(158, 212, 253);
+} */
+
+/* table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+td {
+  border:0;
+}
+
+table th {
+  background-color: #555;
+  color: white;
+}
+
+table tr:nth-child(odd) {
+  background-color: #ddd;
+}
+
+table tr:nth-child(even) {
+  background-color: #eee;
+} */
+
+.alluserstable {
+   font-family: Arial, sans-serif;
+   border-collapse: collapse;
+   /* width: 100%; */
+   border: 2px rgb(255, 255, 255) solid;
+   border-radius: 10px;
+   
+}
+
+th {
+   /* background-color: #f2f2f2;
+  color: #333333;
+  font-weight: bold;
+  text-align: left;
+  padding: 8px;
+  border-bottom: 2px solid #ddd; */
+   background: linear-gradient(to bottom, #f2f2f2, #e6e6e6);
+   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+tr {
+   color: #666666;
+   height: 50px;
+}
+
+td {
+   padding: 8px;
+   border-bottom: 1px solid #f2f2f2;
+}
+
+tr:nth-child(even) {
+   background-color: #f9f9f9;
+}
+
+tr:nth-child(odd) {
+  background-color: #f9f9f98c;
+}
+
+input {
+   padding: 5px;
+   margin: 5px 0px;
+   width: 120px;
+   border-radius: 5px;
+   border: 1px solid gray;
+}
+
+select {
+   width: 80px;
+   padding: 5px;
+   margin: 5px 0px;
+   border-radius: 5px;
+   border: 1px solid gray;
+}
+
+/* input:invalid:focus{ */
+/* input:invalid[focused="true"] {
+   border: 2px solid red;
+} */
+
+tbody tr:hover {
+   background-color: #33b3f3;
+   color: rgb(250, 250, 250);
+   border: 2px solid #333;
+}
+
+.app {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   height: 95vh;
+   background: linear-gradient(
+         rgba(255, 255, 255, 0.7),
+         rgba(255, 255, 255, 0.3)
+      ),
+      url("https://images.pexels.com/photos/114979/pexels-photo-114979.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500");
+   background-size: cover;
+   background-position: center;
+}
+
+.allusers {
+  background-color: rgb(216, 156, 255);
+  padding: 20px 60px;
+  border-radius: 10px;
+}
+
+h1 {
+  color: rgb(77, 1, 77);
+  text-align: center;
+}
+
+.edit{
+  height: 50px;
+  padding: 10px;
+  border: none;
+  background-color: rgb(88, 110, 210);
+  color: white;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 18px;
+  cursor: pointer;
+  margin-top: 15px;
+  margin-bottom: 30px;
+}
+
+.delete{
+  height: 50px;
+  padding: 10px;
+  border: none;
+  background-color: rgb(153, 51, 51);
+  color: white;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 18px;
+  cursor: pointer;
+  margin-top: 15px;
+  margin-bottom: 30px;
 }

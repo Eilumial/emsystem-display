@@ -28,6 +28,10 @@ import Cookies from "js-cookie";
 import { ViewAllUsers } from "./components/Admin/ViewAllUsers";
 import ManageDepartmentList from "./components/Departments/ManageDepartmentList";
 import ManageUserDepartments from "./components/Departments/ManageUserDepartments";
+import ManageProjectList from "./components/Projects/ManageProjectList";
+import ManageUserProjects from "./components/Projects/ManageUserProjects";
+import ManageDepartmentEmp from "./components/Departments/ManageDepartmentEmp";
+import ManageProjectEmp from "./components/Projects/ManageProjectEmp";
 
 export var ContextHook = createContext();
 
@@ -121,6 +125,12 @@ export default function Router() {
               <Route path="/viewalluser" element={<ViewAllUsers />} />
               <Route path="/managedeplist" element={<ManageDepartmentList/>}/>
               <Route path="/manageuserdep" element={<ManageUserDepartments/>}/>
+              <Route path="/managedepemp" element={<ManageDepartmentEmp/>}/>
+              <Route path="/manageprojlist" element={<ManageProjectList/>}/>
+              <Route path="/manageuserproj" element={<ManageUserProjects/>}/>
+              <Route path="/manageprojemp" element={<ManageProjectEmp/>}/>
+              
+              
             </>
           )}
 
