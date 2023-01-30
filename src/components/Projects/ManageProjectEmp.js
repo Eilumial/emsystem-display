@@ -206,7 +206,7 @@ export default function ManageProjectEmp() {
       ) {
          //   console.log(process.env.REACT_APP_SERVER_DEP_URL + `/${depId}/${id}`);
          fetch(
-            process.env.REACT_APP_SERVER_DEP_URL + `/${projectID}/${emp.id}`,
+            process.env.REACT_APP_SERVER_PROJ_URL + `/${projectID}/${emp.id}`,
             {
                method: "DELETE",
                headers: headers,

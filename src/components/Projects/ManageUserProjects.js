@@ -160,6 +160,7 @@ function ManageUserProjects() {
         setName(userList[0].projects.map((project) => project.project_name));
         setSearched(true);
         setUserEmail(searchInput);
+        setErrorMsg("");
 
       });
   }

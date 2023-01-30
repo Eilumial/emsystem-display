@@ -74,7 +74,7 @@ export default function Router() {
       >
         <Sidebar userLogin={userLogin} isAdmin={isAdmin} />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<LoginForm />} />
           {/* <Route path="/about" element={<AbtPejFunc />} />
         <Route path="/contact" element={<CntPejFunc />} />
         <Route path="/book" element={<Book />} /> */}

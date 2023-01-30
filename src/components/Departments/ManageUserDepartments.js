@@ -163,6 +163,7 @@ function ManageUserDepartments() {
             );
             setSearched(true);
             setUserEmail(searchInput);
+            setErrorMsg("");
             //   console.log("After roles"+roles);
             //   setUserList(prevList=>[...prevList]);
             //   console.log("Before roles"+depList);
