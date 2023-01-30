@@ -2,17 +2,17 @@ import React, { useState, useEffect, useContext } from "react";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import { ContextHook } from "../../Router";
-
-var initDepList = [
-   {
-      createdBy: "",
-      createdOn: "",
-      lastModifiedBy: "",
-      lastModifiedOn: "",
-      id: 0,
-      role: "",
-   },
-];
+import { initDepList } from "../Global/initialState";
+// var initDepList = [
+//    {
+//       createdBy: "",
+//       createdOn: "",
+//       lastModifiedBy: "",
+//       lastModifiedOn: "",
+//       id: 0,
+//       role: "",
+//    },
+// ];
 
 function ManageDepartmentList() {
    const [depList, SetDepList] = useState(initDepList);

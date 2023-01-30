@@ -399,7 +399,7 @@ export const ViewAllUsers = () => {
                      .map((item) =>
                         updateState === item.userEntity.id ? (
                            <tr>
-                              <td>
+                              <td className="td1">
                                  {/* <input
                                     type="text"
                                     name="username"
@@ -513,7 +513,7 @@ export const ViewAllUsers = () => {
                            </tr>
                         ) : (
                            <tr key={item.id}>
-                              <td>{item.userEntity.username}</td>
+                              <td className="td1">{item.userEntity.username}</td>
                               <td>{item.first_name}</td>
                               <td>{item.last_name}</td>
                               <td>{item.age}</td>

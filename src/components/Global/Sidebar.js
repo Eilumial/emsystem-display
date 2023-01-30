@@ -66,7 +66,7 @@ export default function Sidebar(props) {
     <div className="sidebar">
       {!props.userLogin && (
         <>
-          Public
+          
           <a href="/login">
             <button>Login</button>
           </a>

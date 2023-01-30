@@ -10,14 +10,6 @@ import {
   Switch,
 } from "react-router-dom";
 
-// import HomPejFunc from "./pages/Home";
-// import AbtPejFunc, { CntPejFunc } from "./pages/About";
-// import LoginPejFunc from "./pages/Login";
-// import Dashboard from "./pages/Dashboard";
-// import AbtPejFunc from "./pages/About";
-// import CntPejFunc from "./pages/Contact";
-// import User from "./pages/User";
-// import Book from "./Book";
 import LoginForm from "./components/Login/LoginForm";
 import Home from "./components/Home/Home";
 import Protected from "./components/Protected/Protected";
@@ -75,9 +67,6 @@ export default function Router() {
         <Sidebar userLogin={userLogin} isAdmin={isAdmin} />
         <Routes>
           <Route path="/" element={<LoginForm />} />
-          {/* <Route path="/about" element={<AbtPejFunc />} />
-        <Route path="/contact" element={<CntPejFunc />} />
-        <Route path="/book" element={<Book />} /> */}
           <Route path="/login" element={<LoginForm />} />
           <Route path="/register" element={<RegisterUser />} />
           {/* <Route

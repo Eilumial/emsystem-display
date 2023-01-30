@@ -36,7 +36,8 @@ table tr:nth-child(even) {
    /* width: 100%; */
    border: 2px rgb(255, 255, 255) solid;
    border-radius: 10px;
-   
+   max-height: 300px; /* add this line */
+   overflow-y: auto; /* add this line */
 }
 
 th {
@@ -50,14 +51,20 @@ th {
    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
 }
 
+.trtitle{
+  background-color: #c055f9;
+}
+
 tr {
    color: #666666;
    height: 50px;
+   border: 0;
 }
 
 td {
    padding: 8px;
    border-bottom: 1px solid #f2f2f2;
+   border: 0;
 }
 
 tr:nth-child(even) {
@@ -66,6 +73,12 @@ tr:nth-child(even) {
 
 tr:nth-child(odd) {
   background-color: #f9f9f98c;
+}
+
+.td1 {
+  background-color: #8310ff7a;
+  color: white;
+  
 }
 
 input {
@@ -90,7 +103,7 @@ select {
 } */
 
 tbody tr:hover {
-   background-color: #33b3f3;
+   background-color: #c055f9;
    color: rgb(250, 250, 250);
    border: 2px solid #333;
 }
