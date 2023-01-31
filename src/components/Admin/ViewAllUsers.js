@@ -86,6 +86,7 @@ export const ViewAllUsers = () => {
    const [salary, setSalary] = useState(0.0);
    const [email, setEmail] = useState("");
    const [errorMsg, setErrorMsg] = useState("");
+   const [searchInput, setSearchInput] = useState("");
    const navigate = useNavigate();
    let contextData = useContext(ContextHook);
    // contextData.setJwt(Cookies.get("jwt"));
@@ -102,6 +103,8 @@ export const ViewAllUsers = () => {
       })
          .then((res) => res.json())
          .then((data) => {
+            console.log("useEffect");
+            console.log(data);
             setUserList(data);
          });
    }, []);
@@ -350,6 +353,37 @@ export const ViewAllUsers = () => {
          });
    };
 
+   function setAdmin(item) {
+      if (
+         window.confirm(
+            `Are you sure you want to assign ADMIN rights to ${item.userEntity.username}?`
+         )
+      ) {
+         const headers = {
+            Authorization: `Bearer ${Cookies.get("jwt")}`,
+         };
+
+         console.log("Entity ID " + item.userEntity.id);
+         fetch(
+            process.env.REACT_APP_SERVER_USER_URL +
+               `/authadmin/${item.userEntity.id}`,
+            {
+               method: "PUT",
+               headers: headers,
+            }
+         )
+            .then((res) => res.text())
+            .then((data) => {
+               if (data.includes("*user*")) {
+                  console.log(data);
+                  alert(data.replace("*user*", item.userEntity.username));
+               }
+               
+               getAllDataFromDB();
+            });
+      }
+   }
+
    return (
       <div className="app">
          <form
@@ -361,6 +395,12 @@ export const ViewAllUsers = () => {
          >
             {/* <form> */}
             {errorMsg}
+            <input
+               type="text"
+               className="list_search"
+               onChange={(e) => setSearchInput(e.target.value)}
+               placeholder="Search Employee List"
+            ></input>
             <table className="alluserstable" cellPadding="10">
                <thead>
                   <tr>
@@ -373,6 +413,7 @@ export const ViewAllUsers = () => {
                      <th>Salary</th>
                      <th>Edit</th>
                      <th>Delete</th>
+                     <th>Admin</th>
                      <th>Last Modified By</th>
                      <th>Last Modified On</th>
                   </tr>
@@ -396,9 +437,29 @@ export const ViewAllUsers = () => {
                      //     item.userEntity.username.toLowerCase() !==
                      //     Cookies.get("username").toLowerCase()
                      // )
+
+                     .filter(
+                        (item) =>
+                           item.first_name
+                              .toLowerCase()
+                              .includes(searchInput.toLowerCase()) ||
+                           item.last_name
+                              .toLowerCase()
+                              .includes(searchInput.toLowerCase()) ||
+                           item.userEntity.username
+                              .toLowerCase()
+                              .includes(searchInput.toLowerCase()) ||
+                           item.age == searchInput.toLowerCase() ||
+                           item.gender.toLowerCase() ===
+                              searchInput.toLowerCase() ||
+                           item.email
+                              .toLowerCase()
+                              .includes(searchInput.toLowerCase()) ||
+                           item.salary == searchInput.toLowerCase()
+                     )
                      .map((item) =>
                         updateState === item.userEntity.id ? (
-                           <tr>
+                           <tr key={item.userEntity.id}>
                               <td className="td1">
                                  {/* <input
                                     type="text"
@@ -488,7 +549,12 @@ export const ViewAllUsers = () => {
                                     required
                                  ></input>
                               </td>
-                              <td>
+                              <td
+                                 style={{
+                                    textAlign: "center",
+                                    margin: "0 auto",
+                                 }}
+                              >
                                  <button className="edit" type="submit">
                                     Update
                                  </button>
@@ -497,7 +563,15 @@ export const ViewAllUsers = () => {
                       </button> */}
                               </td>
                               <td></td>
-                              <td>{item.lastModifiedBy}</td>
+                              <td></td>
+                              <td
+                                 style={{
+                                    textAlign: "center",
+                                    margin: "0 auto",
+                                 }}
+                              >
+                                 {item.lastModifiedBy}
+                              </td>
                               <td>
                                  {new Date(
                                     item.lastModifiedOn
@@ -513,7 +587,9 @@ export const ViewAllUsers = () => {
                            </tr>
                         ) : (
                            <tr key={item.id}>
-                              <td className="td1">{item.userEntity.username}</td>
+                              <td className="td1">
+                                 {item.userEntity.username}
+                              </td>
                               <td>{item.first_name}</td>
                               <td>{item.last_name}</td>
                               <td>{item.age}</td>
@@ -521,7 +597,12 @@ export const ViewAllUsers = () => {
                               <td>{item.email}</td>
                               <td>${item.salary.toFixed(2)}</td>
 
-                              <td>
+                              <td
+                                 style={{
+                                    textAlign: "center",
+                                    margin: "0 auto",
+                                 }}
+                              >
                                  <button
                                     type="button"
                                     className="edit"
@@ -531,20 +612,63 @@ export const ViewAllUsers = () => {
                                     Edit
                                  </button>
                               </td>
-                              <td>
+                              <td
+                                 style={{
+                                    textAlign: "center",
+                                    margin: "0 auto",
+                                 }}
+                              >
                                  {item.userEntity.username.toLowerCase() !==
-                                    Cookies.get("username").toLowerCase() && (
-                                    <button
-                                       type="button"
-                                       className="delete"
-                                       onClick={() => delHandler(item)}
-                                    >
-                                       {/* <button type="submit"> */}
-                                       Delete
-                                    </button>
-                                 )}
+                                    Cookies.get("username").toLowerCase() &&
+                                    !item.userEntity.roles.find(
+                                       (role) => role.name === "ADMIN"
+                                    ) && (
+                                       <button
+                                          type="button"
+                                          className="delete"
+                                          onClick={() => delHandler(item)}
+                                       >
+                                          Delete
+                                       </button>
+                                    )}
                               </td>
-                              <td>{item.lastModifiedBy}</td>
+                              {item.userEntity.username.toLowerCase() !==
+                                 Cookies.get("username").toLowerCase() &&
+                              !item.userEntity.roles.find(
+                                 (role) => role.name === "ADMIN"
+                              ) ? (
+                                 <td
+                                    style={{
+                                       textAlign: "center",
+                                       margin: "0 auto",
+                                    }}
+                                 >
+                                    <button
+                                       className="admin_btn"
+                                       type="button"
+                                       onClick={() => setAdmin(item)}
+                                    >
+                                       Authorize
+                                    </button>
+                                 </td>
+                              ) : (
+                                 <td
+                                    style={{
+                                       textAlign: "center",
+                                       margin: "0 auto",
+                                    }}
+                                 >
+                                    Admin
+                                 </td>
+                              )}
+                              <td
+                                 style={{
+                                    textAlign: "center",
+                                    margin: "0 auto",
+                                 }}
+                              >
+                                 {item.lastModifiedBy}
+                              </td>
                               <td>
                                  {new Date(
                                     item.lastModifiedOn

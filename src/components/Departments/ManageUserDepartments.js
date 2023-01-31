@@ -86,10 +86,11 @@ function ManageUserDepartments() {
    const [role, setRole] = useState([]);
    const [selectedId, setSelectedId] = useState(0);
    const [selectedRole, setSelectedRole] = useState("");
-   const [errorMsg, setErrorMsg] = useState("");
+   const [errorMsg, setErrorMsg] = useState("Please select a Department");
    const [searched, setSearched] = useState(false);
    const [roleInput, setRoleInput] = useState("");
    const [userEmail, setUserEmail] = useState("");
+   const [error, setError] = useState("defaultMsg");
 
    useEffect(() => {
       const headers = {
@@ -163,7 +164,8 @@ function ManageUserDepartments() {
             );
             setSearched(true);
             setUserEmail(searchInput);
-            setErrorMsg("");
+            setErrorMsg("Please select a Department");
+            setError("defaultMsg");
             //   console.log("After roles"+roles);
             //   setUserList(prevList=>[...prevList]);
             //   console.log("Before roles"+depList);
@@ -217,6 +219,7 @@ function ManageUserDepartments() {
                //   if (data.status === "success") {
                if (data.role !== null) {
                   setErrorMsg("Success!");
+                  setError("successGreen");
                   refreshUserList();
 
                   //     setTimeout(refreshUserList(), 5000);
@@ -228,6 +231,7 @@ function ManageUserDepartments() {
                   setErrorMsg(
                      "Error: User already assigned to this department!"
                   );
+                  setError("errorRed");
                }
                //   getAllDataFromDB();
                // console.log(data);
@@ -239,6 +243,7 @@ function ManageUserDepartments() {
             });
       } else {
          setErrorMsg("Please select a Department.");
+         setError("defaultMsg");
       }
    }
 
@@ -292,6 +297,7 @@ function ManageUserDepartments() {
             //   if (data.status === "success") {
             if (data.role !== null) {
                setErrorMsg("Success!");
+               setError("successGreen");
                refreshUserList();
 
                //     setTimeout(refreshUserList(), 5000);
@@ -332,12 +338,13 @@ function ManageUserDepartments() {
                //     setErrorMsg(data.replace("*name*", item.role));
                //     setErrorMsg(data);
                setErrorMsg(
-                  "Record of Department: (" +
+                  "Record (" +
                      dep.role +
-                     ") for Username: (" +
+                     ") for (" +
                      userList[0].userEntity.username +
                      ") has been deleted"
                );
+               setError("successGreen");
                refreshUserList();
                //     getAllDataFromDB();
             });
@@ -346,101 +353,119 @@ function ManageUserDepartments() {
 
    return (
       <div className="app">
-         <form
-            onSubmit={(e) => {
-               e.preventDefault();
-               searchHandler();
-            }}
-         >
-            <input
-               type="email"
-               onChange={(e) => setSearchInput(e.target.value)}
-               placeholder="Search by Employee Email"
-               style={{ width: "300px", height: "30px" }}
-               required
-            ></input>
-            <button type="submit">Search</button>
-         </form>
-         {searched && (
-            <>
-               <p>
-                  Email: {userList[0].email}
-                  <br />
-                  Username: {userList[0].userEntity.username}
-               </p>
+         <div className="list_table">
+            <form
+               onSubmit={(e) => {
+                  e.preventDefault();
+                  searchHandler();
+               }}
+            >
+               <input
+                  type="email"
+                  onChange={(e) => setSearchInput(e.target.value)}
+                  placeholder="Search by Employee Email"
+                  style={{ width: "300px", height: "30px" }}
+                  required
+               ></input>
+               <button className="search_btn" type="submit">
+                  Search
+               </button>
+            </form>
+            {searched && (
+               <>
+                  <div className="pdetails">
+                     Email: {userList[0].email}
+                     <br />
+                     Username: {userList[0].userEntity.username}
+                  </div>
 
-               {/* <select> */}
-               <select
-                  className="depselect"
-                  defaultValue=""
-                  onChange={(e) => setSelectedRole(e.target.value)}
-               >
-                  <option value="" disabled>
-                     Select Department
-                  </option>
-                  {depList
-                     //     .filter((item) => !roles.includes(item.role))
-                     .map((item) => (
-                        <option key={item.id}>{item.role}</option>
-                     ))}
-                  {/* {depList
+                  {/* <select> */}
+
+                  {/* <p className={error ? "errorRed" : "successGreen"}>{errorMsg}</p> */}
+                  <div className="error_div">
+                     <p className={[error]}>{errorMsg}</p>
+                  </div>
+                  <div>
+                     <select
+                        className="depselect"
+                        defaultValue=""
+                        onChange={(e) => setSelectedRole(e.target.value)}
+                     >
+                        <option value="" disabled>
+                           Select Department
+                        </option>
+                        {depList
+                           //     .filter((item) => !roles.includes(item.role))
+                           .map((item) => (
+                              <option key={item.id}>{item.role}</option>
+                           ))}
+                        {/* {depList
                   .filter((item)=>)
         .map((item) => (
           <option key={item.id}>{item.role}</option>
         ))} */}
-               </select>
-               <button type="button" onClick={() => addHandler()}>
-                  Assign to User
-               </button>
-               {errorMsg}
-               <table>
-                  <thead>
-                     <tr>
-                        <th>Departments</th>
-                     </tr>
-                  </thead>
-                  <tbody>
-                     {userList[0].departments
-                        .sort((a, b) => a.departmentId.id - b.departmentId.id)
-                        // .sort((a,b)=>a.role.localeCompare(b.role))
-                        .map((dep) =>
-                           updateState === dep.departmentId.id ? (
-                              <tr key={dep.departmentId.id}>
-                                 <td>
-                                    <input
-                                       type="text"
-                                       name="role"
-                                       defaultValue={dep.role}
-                                       onChange={(e) =>
-                                          setRoleInput(e.target.value)
-                                       }
-                                       required
-                                    ></input>
-                                 </td>
-                                 <td>
-                                    <button
-                                       type="button"
-                                       onClick={() => updateHandler(dep)}
-                                    >
-                                       Update
-                                    </button>
-                                 </td>
-                              </tr>
-                           ) : (
-                              <tr key={dep.departmentId.id}>
-                                 <td>{dep.role}</td>
-                                 {/* <td>
+                     </select>
+                     <button
+                        className="assign_btn"
+                        type="button"
+                        onClick={() => addHandler()}
+                     >
+                        Assign to User
+                     </button>
+
+                     <table className="deplisttable">
+                        <thead>
+                           <tr>
+                              <th colSpan={2}>Departments</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           {userList[0].departments
+                              .sort(
+                                 (a, b) => a.departmentId.id - b.departmentId.id
+                              )
+                              // .sort((a,b)=>a.role.localeCompare(b.role))
+                              .map((dep) =>
+                                 updateState === dep.departmentId.id ? (
+                                    <tr key={dep.departmentId.id}>
+                                       <td>
+                                          <input
+                                             type="text"
+                                             name="role"
+                                             defaultValue={dep.role}
+                                             onChange={(e) =>
+                                                setRoleInput(e.target.value)
+                                             }
+                                             required
+                                          ></input>
+                                       </td>
+                                       <td>
+                                          <button
+                                             type="button"
+                                             onClick={() => updateHandler(dep)}
+                                          >
+                                             Update
+                                          </button>
+                                       </td>
+                                    </tr>
+                                 ) : (
+                                    <tr key={dep.departmentId.id}>
+                                       <td>{dep.role}</td>
+                                       {/* <td>
                         <button onClick={() => editStatus(dep)}>Edit</button>
                       </td> */}
-                                 <td>
-                                    <button onClick={() => delHandler(dep)}>
-                                       Delete
-                                    </button>
-                                 </td>
-                              </tr>
-                           )
-                        )}
-                     {/* {userList.map((item) => (
+                                       <td>
+                                          <button
+                                             className="del_dep"
+                                             onClick={() => delHandler(dep)}
+                                          >
+                                             Delete
+                                          </button>
+                                       </td>
+                                    </tr>
+                                 )
+                              )}
+                           {/* {userList.map((item) => (
             <>
               <tr key={item.id}>
                 <td>{item.userEntity.username}</td>
@@ -453,10 +478,12 @@ function ManageUserDepartments() {
               ))}
             </>
           ))} */}
-                  </tbody>
-               </table>
-            </>
-         )}
+                        </tbody>
+                     </table>
+                  </div>
+               </>
+            )}
+         </div>
       </div>
    );
 }

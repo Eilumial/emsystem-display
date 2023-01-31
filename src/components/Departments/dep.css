@@ -1,9 +1,24 @@
 .depselect {
    padding: 5px;
    margin: 5px 0px;
+   height: 40px;
    width: 180px;
    border-radius: 5px;
    border: 1px solid gray;
+}
+
+.depselect2 {
+   padding: 5px;
+   margin: 5px 0px;
+   height: 45px;
+   width: 300px;
+   border-radius: 5px;
+   border: 1px solid gray;
+}
+
+.depselect2 option {
+   height: 50px;
+   line-height: 50px;
 }
 
 input {
@@ -15,8 +30,141 @@ input {
 }
 
 .deplisttable {
+   font-family: Arial, sans-serif;
+   border-collapse: collapse;
+   /* width: 100%; */
+   border: 2px rgb(255, 255, 255) solid;
+
    width: 500px;
    height: 300px;
    overflow-x: scroll;
    overflow-y: scroll;
+}
+
+.errorRed {
+   color: red;
+   font-weight: bold;
+   font-size: 20px;
+   /* text-shadow: 2px 2px white; */
+}
+.successGreen {
+   color: rgb(18, 136, 28);
+   font-weight: bold;
+   font-size: 20px;
+   text-shadow: 1px 1px white;
+}
+.defaultMsg {
+   color: rgb(2, 2, 2);
+   font-weight: bold;
+   font-size: 20px;
+   /* text-shadow: 2px 2px white; */
+}
+
+.list_search {
+   width: 200px;
+   height: 20px;
+}
+
+.add_dep {
+   height: 40px;
+   width: 100px;
+   padding: 10px;
+   border: none;
+
+   background-color: rgb(88, 210, 98);
+   color: white;
+   border-radius: 5px;
+   font-weight: bold;
+   font-size: 14px;
+   cursor: pointer;
+   margin-top: 15px;
+   margin-left: 10px;
+   /* margin-bottom: 30px; */
+}
+
+.add_dep:hover {
+   background-color: rgb(85, 247, 158);
+   box-shadow: 0 0 0 3px white;
+}
+
+.edit_dep {
+   height: 40px;
+   padding: 10px;
+   border: none;
+   background-color: rgb(88, 110, 210);
+   color: white;
+   border-radius: 5px;
+   font-weight: bold;
+   font-size: 14px;
+   cursor: pointer;
+   margin-top: 15px;
+   margin-bottom: 30px;
+}
+
+.edit_dep:hover {
+   background-color: rgb(184, 204, 248);
+   box-shadow: 0 0 0 3px white;
+}
+
+.del_dep {
+   height: 40px;
+   padding: 10px;
+   border: none;
+   background-color: rgb(153, 51, 51);
+   color: white;
+   border-radius: 5px;
+   font-weight: bold;
+   font-size: 14px;
+   cursor: pointer;
+   margin-top: 15px;
+   margin-bottom: 30px;
+}
+
+.del_dep:hover {
+   background-color: rgb(220, 71, 71);
+   box-shadow: 0 0 0 3px white;
+}
+
+.pdetails {
+   background-color: rgb(237, 200, 255);
+   width: 430px;
+   border-radius: 5px;
+   border: white 2px solid;
+   padding-left: 20px;
+   padding-top: 10px;
+   padding-bottom: 10px;
+   border-radius: 10px;
+   margin-top: 5px;
+   margin-bottom: 2px;
+}
+
+.error_div {
+   background-color: rgb(237, 200, 255);
+   width: 420px;
+   border: white 2px solid;
+   border-radius: 10px;
+   padding-left: 15px;
+   padding-right: 15px;
+   margin-top: 5px;
+   margin-bottom: 2px;
+}
+
+.assign_btn {
+   height: 40px;
+   padding: 10px;
+   border: none;
+   background-color: rgb(88, 110, 210);
+   color: white;
+   border-radius: 5px;
+   font-weight: bold;
+   font-size: 14px;
+   cursor: pointer;
+   margin-top: 15px;
+   margin-bottom: 15px;
+   margin-left: 10px;
+}
+
+.assign_btn:hover {
+   background-color: rgb(132, 153, 248);
+   box-shadow: 0 0 0 3px white;
 }

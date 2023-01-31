@@ -25,6 +25,7 @@ function UserCP(props) {
       username: "",
       password: "",
       oldpassword: "",
+      confirmPassword: ""
    });
 
    const inputs = [
@@ -74,8 +75,12 @@ function UserCP(props) {
             Authorization: `Bearer ${Cookies.get("jwt")}`,
             "Content-Type": "application/json",
          };
-
-         fetch("http://localhost:8080/ems/user/pw", {
+         var url = "http://localhost:8080/ems/u/pw";
+         if (Cookies.get("ADMIN") === "true") {
+            url = "http://localhost:8080/ems/user/pw";
+         }
+         console.log("URL: " + url);
+         fetch(url, {
             method: "POST",
             headers: headers,
             body: JSON.stringify({

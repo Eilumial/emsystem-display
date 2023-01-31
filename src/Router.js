@@ -25,6 +25,7 @@ import ManageUserProjects from "./components/Projects/ManageUserProjects";
 import ManageDepartmentEmp from "./components/Departments/ManageDepartmentEmp";
 import ManageProjectEmp from "./components/Projects/ManageProjectEmp";
 import UserCP from "./components/UserCP/UserCP";
+import UserDetails from "./components/User/UserDetails";
 
 export var ContextHook = createContext();
 
@@ -106,10 +107,12 @@ export default function Router() {
               {/* <Route path="/user/:id" element={<User />} />
             <Route path="/user/:name/:id" element={<User />} /> */}
               <Route path="/protected" element={<Protected />} />
+              <Route path="/userdetails" element={<UserDetails />} />
+              <Route path="/usercp" element={<UserCP/>}/>
             </>
           )}
 
-          {isAdmin && (
+          {Cookies.get("ADMIN")==="true" && (
             <>
               <Route path="/admin" element={<Admin />} />
               <Route path="/viewalluser" element={<ViewAllUsers />} />
@@ -119,7 +122,7 @@ export default function Router() {
               <Route path="/manageprojlist" element={<ManageProjectList/>}/>
               <Route path="/manageuserproj" element={<ManageUserProjects/>}/>
               <Route path="/manageprojemp" element={<ManageProjectEmp/>}/>
-              <Route path="/usercp" element={<UserCP/>}/>
+              
 
               
               

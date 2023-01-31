@@ -80,7 +80,7 @@ export default function ManageProjectEmp() {
    const [searched, setSearched] = useState(false);
    const [projectID, setProjectID] = useState(0);
    const [projectName, setProjectName] = useState("");
-
+   const [error, setError] = useState("defaultMsg");
    useEffect(() => {
       getProjList();
    }, []);
@@ -217,12 +217,13 @@ export default function ManageProjectEmp() {
                //     setErrorMsg(data.replace("*name*", item.role));
                //     setErrorMsg(data);
                setErrorMsg(
-                  "Record of Department: (" +
-                     projectName +
-                     ") for Username: (" +
+                  "(" +
                      emp.userEntity.username +
-                     ") has been deleted"
+                     ") has been removed from Project (" +
+                     projectName +
+                     ")"
                );
+               setError("successGreen");
                refreshProjUserList();
                // refreshUserList();
                //     getAllDataFromDB();
@@ -233,7 +234,7 @@ export default function ManageProjectEmp() {
       <div className="app">
          <br />
          <select
-            className="depselect"
+            className="depselect2"
             defaultValue=""
             // onChange={(e) => setSelectedName(e.target.value)}>
             onChange={(e) => findProjHandler(e)}
@@ -255,11 +256,24 @@ export default function ManageProjectEmp() {
          {/* <button type="button" onClick={() => findEmpHandler()}>
             Search
          </button> */}
-         {errorMsg}
+         {errorMsg !== "" && (
+            <div className="error_div">
+               <p className={[error]}>{errorMsg}</p>
+            </div>
+         )}
          <br />
          {searched && (
             <div>
-               <table>
+               <table
+                  className="deplisttable"
+                  style={{
+                     width: "800px",
+                     height: "100px",
+                     maxWidth: "800px",
+                     maxHeight: "800px",
+                     overflowY: "scroll",
+                  }}
+               >
                   <thead>
                      <tr>
                         <th>Username</th>
@@ -278,6 +292,7 @@ export default function ManageProjectEmp() {
                            <td>{emp.email}</td>
                            <td>
                               <button
+                                 className="del_dep"
                                  type="Button"
                                  onClick={() => delHandler(emp)}
                               >

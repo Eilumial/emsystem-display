@@ -89,10 +89,7 @@ function ManageDepartmentList() {
                .then((data) => {
                   console.log(data);
                   if (data.role == null) {
-                     setErrorMsg(
-                        "Error: Duplicate Department name"
-                     );
-
+                     setErrorMsg("Error: Duplicate Department name");
                   } else {
                      setErrorMsg("");
                      setUpdateState(-1);
@@ -170,7 +167,7 @@ function ManageDepartmentList() {
 
    return (
       <div className="app">
-         <div>
+         <div className="list_table">
             {/* {
                   editMode?
                   <form
@@ -196,19 +193,21 @@ function ManageDepartmentList() {
             <form>
                {/* <label>Add</label> */}
                <input
+                  className="list_search"
                   type="text"
                   name="add"
                   onChange={(e) => setAddInput(e.target.value)}
                   value={addInput}
                   placeholder="Add Department"
                />
-               <button type="button" onClick={() => addHandler()}>
+               <button className="add_dep" type="button" onClick={() => addHandler()}>
                   Add
                </button>
 
                <br />
                {/* <label>Search</label> */}
                <input
+                  className="list_search"
                   type="text"
                   name="search"
                   onChange={(e) => setSearchInput(e.target.value)}
@@ -224,18 +223,18 @@ function ManageDepartmentList() {
             </button>
           )} */}
             </form>
-            {errorMsg}
+            <div style={{marginTop: "10px", marginBottom: "10px"}}>{errorMsg}</div>
             <div
                style={{
                   overflow: "scroll",
-                  maxHeight: "700px",
+                  maxHeight: "600px",
                   maxWidth: "800px",
                }}
             >
                <table className="deplisttable">
                   <thead>
                      <tr>
-                        <th>Department Name</th>
+                        <th colSpan={3}>Departments</th>
                         <th></th>
                         <th></th>
                      </tr>
@@ -266,6 +265,7 @@ function ManageDepartmentList() {
 
                                  <td>
                                     <button
+                                       className="edit_dep"
                                        type="button"
                                        onClick={() => updateHandler()}
                                     >
@@ -281,12 +281,18 @@ function ManageDepartmentList() {
                               <tr key={item.id}>
                                  <td>{item.role}</td>
                                  <td>
-                                    <button onClick={() => editStatus(item)}>
+                                    <button
+                                       className="edit_dep"
+                                       onClick={() => editStatus(item)}
+                                    >
                                        Edit
                                     </button>
                                  </td>
                                  <td>
-                                    <button onClick={() => delHandler(item)}>
+                                    <button
+                                       className="del_dep"
+                                       onClick={() => delHandler(item)}
+                                    >
                                        Delete
                                     </button>
                                  </td>

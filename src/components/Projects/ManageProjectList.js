@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import { ContextHook } from "../../Router";
+import "../Departments/dep.css";
 
 var initProjList = [
    {
@@ -171,7 +172,7 @@ function ManageProjectList() {
 
    return (
       <div className="app">
-         <div>
+         <div className="list_table">
             {/* {
                   editMode?
                   <form
@@ -198,18 +199,24 @@ function ManageProjectList() {
                {/* <label>Add</label> */}
                <input
                   type="text"
+                  className="list_search"
                   name="add"
                   onChange={(e) => setAddInput(e.target.value)}
                   value={addInput}
                   placeholder="Add Project"
                />
-               <button type="button" onClick={() => addHandler()}>
+               <button
+                  className="add_dep"
+                  type="button"
+                  onClick={() => addHandler()}
+               >
                   Add
                </button>
 
                <br />
                {/* <label>Search</label> */}
                <input
+                  className="list_search"
                   type="text"
                   name="search"
                   onChange={(e) => setSearchInput(e.target.value)}
@@ -225,70 +232,87 @@ function ManageProjectList() {
             </button>
           )} */}
             </form>
-            {errorMsg}
-            <table>
-               <thead>
-                  <tr>
-                     <th>Project Name</th>
-                     <th></th>
-                     <th></th>
-                  </tr>
-               </thead>
-               <tbody>
-                  {projList
-                     .filter((item) =>
-                        item.projectName
-                           .toLowerCase()
-                           .includes(searchInput.toLowerCase())
-                     )
-                     // .sort((a, b) => a.projectId.id - b.projectId.id)
-                     .sort((a, b) => a.projectName.localeCompare(b.projectName))
-                     .map((item) =>
-                        updateState === item.id ? (
-                           <tr key={item.id}>
-                              <td>
-                                 <input
-                                    type="text"
-                                    name="projectName"
-                                    defaultValue={item.projectName}
-                                    onChange={(e) =>
-                                       setNameInput(e.target.value)
-                                    }
-                                    required
-                                 ></input>
-                              </td>
+            <div style={{marginTop: "10px", marginBottom: "10px"}}>{errorMsg}</div>
+            <div
+               style={{
+                  overflow: "scroll",
+                  maxHeight: "600px",
+                  maxWidth: "800px",
+               }}
+            >
+               <table className="deplisttable">
+                  <thead>
+                     <tr>
+                        <th colSpan={3}>Project Name</th>
+                        <th></th>
+                        <th></th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     {projList
+                        .filter((item) =>
+                           item.projectName
+                              .toLowerCase()
+                              .includes(searchInput.toLowerCase())
+                        )
+                        // .sort((a, b) => a.projectId.id - b.projectId.id)
+                        .sort((a, b) =>
+                           a.projectName.localeCompare(b.projectName)
+                        )
+                        .map((item) =>
+                           updateState === item.id ? (
+                              <tr key={item.id}>
+                                 <td>
+                                    <input
+                                       type="text"
+                                       name="projectName"
+                                       defaultValue={item.projectName}
+                                       onChange={(e) =>
+                                          setNameInput(e.target.value)
+                                       }
+                                       required
+                                    ></input>
+                                 </td>
 
-                              <td>
-                                 <button
-                                    type="button"
-                                    onClick={() => updateHandler()}
-                                 >
-                                    Update
-                                 </button>
-                                 {/* <button type="button" onClick={() => editHandler()}>
+                                 <td>
+                                    <button
+                                       className="edit_dep"
+                                       type="button"
+                                       onClick={() => updateHandler()}
+                                    >
+                                       Update
+                                    </button>
+                                    {/* <button type="button" onClick={() => editHandler()}>
                               Update
                             </button> */}
-                              </td>
-                              <td></td>
-                           </tr>
-                        ) : (
-                           <tr key={item.id}>
-                              <td>{item.projectName}</td>
-                              <td>
-                                 <button onClick={() => editStatus(item)}>
-                                    Edit
-                                 </button>
-                              </td>
-                              <td>
-                                 <button onClick={() => delHandler(item)}>
-                                    Delete
-                                 </button>
-                              </td>
-                           </tr>
-                        )
-                     )}
-               </tbody>
-            </table>
+                                 </td>
+                                 <td></td>
+                              </tr>
+                           ) : (
+                              <tr key={item.id}>
+                                 <td>{item.projectName}</td>
+                                 <td>
+                                    <button
+                                       className="edit_dep"
+                                       onClick={() => editStatus(item)}
+                                    >
+                                       Edit
+                                    </button>
+                                 </td>
+                                 <td>
+                                    <button
+                                       className="del_dep"
+                                       onClick={() => delHandler(item)}
+                                    >
+                                       Delete
+                                    </button>
+                                 </td>
+                              </tr>
+                           )
+                        )}
+                  </tbody>
+               </table>
+            </div>
          </div>
       </div>
    );

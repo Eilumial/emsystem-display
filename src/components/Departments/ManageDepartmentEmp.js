@@ -81,6 +81,7 @@ export default function ManageDepartmentEmp() {
    const [searched, setSearched] = useState(false);
    const [departmentID, setDepartmentID] = useState(0);
    const [departmentName, setDepartmentName] = useState("");
+   const [error, setError] = useState("defaultMsg");
 
    useEffect(() => {
       getDepList();
@@ -185,64 +186,61 @@ export default function ManageDepartmentEmp() {
          )
             .then((res) => res.json())
             .then((data) => {
-                  console.log(data);
+               console.log(data);
                setUserList(data);
                //   console.log("Before roles"+roles);
                //     setRole(userList[0].departments.map((department) => department.role));
                //    console.log(data);
                //    console.log(userList);
                setSearched(true);
-            //    if (userList.length > 0) {
-            //       setSearched(true);
-            //       setErrorMsg("");
-            //    } else {
-            //       setSearched(false);
-            //       setErrorMsg("No Employee found.");
-            //    }
+               //    if (userList.length > 0) {
+               //       setSearched(true);
+               //       setErrorMsg("");
+               //    } else {
+               //       setSearched(false);
+               //       setErrorMsg("No Employee found.");
+               //    }
             });
       } else {
          setErrorMsg("Please select a Department.");
+         setError("errorRed");
       }
    }
 
    function findEmpHandler2(e) {
-      
-      
-         const selectedOption = depList.find((item) => {
-            // console.log("Select role: " + selectedRole);
-            // console.log("Role: "+ item.role)
-            // console.log("id: "+ item.id)
-            return item.role === e.target.value;
-         });
-         console.log("SOID: " + selectedOption.id);
-         console.log("SORole: " + selectedOption.role);
-         setDepartmentID(selectedOption.id);
-         setDepartmentName(selectedOption.role);
-         //    console.log("Depart ID: " + departmentID);
-         //    console.log("Depart Name: " + departmentName);
-         const headers = {
-            Authorization: `Bearer ${Cookies.get("jwt")}`,
-            "Content-Type": "application/json",
-         };
-         //     console.log("User Email: " + userEmail);
-         fetch(
-            process.env.REACT_APP_SERVER_EMP_URL +
-               "/d" +
-               `/${selectedOption.id}`,
-            {
-               method: "GET",
-               headers: headers,
-            }
-         )
-            .then((res) => res.json())
-            .then((data) => {
-                  console.log(data);
-               setUserList(data);
-               //   console.log("Before roles"+roles);
-               //     setRole(userList[0].departments.map((department) => department.role));
-               //    console.log(data);
-               //    console.log(userList);
-               setSearched(true);
+      const selectedOption = depList.find((item) => {
+         // console.log("Select role: " + selectedRole);
+         // console.log("Role: "+ item.role)
+         // console.log("id: "+ item.id)
+         return item.role === e.target.value;
+      });
+      console.log("SOID: " + selectedOption.id);
+      console.log("SORole: " + selectedOption.role);
+      setDepartmentID(selectedOption.id);
+      setDepartmentName(selectedOption.role);
+      //    console.log("Depart ID: " + departmentID);
+      //    console.log("Depart Name: " + departmentName);
+      const headers = {
+         Authorization: `Bearer ${Cookies.get("jwt")}`,
+         "Content-Type": "application/json",
+      };
+      //     console.log("User Email: " + userEmail);
+      fetch(
+         process.env.REACT_APP_SERVER_EMP_URL + "/d" + `/${selectedOption.id}`,
+         {
+            method: "GET",
+            headers: headers,
+         }
+      )
+         .then((res) => res.json())
+         .then((data) => {
+            console.log(data);
+            setUserList(data);
+            //   console.log("Before roles"+roles);
+            //     setRole(userList[0].departments.map((department) => department.role));
+            //    console.log(data);
+            //    console.log(userList);
+            setSearched(true);
             //    if (userList.length > 0) {
             //       setSearched(true);
             //       setErrorMsg("");
@@ -250,8 +248,7 @@ export default function ManageDepartmentEmp() {
             //       setSearched(false);
             //       setErrorMsg("No Employee found.");
             //    }
-            });
-      
+         });
    }
 
    function delHandler(emp) {
@@ -279,12 +276,18 @@ export default function ManageDepartmentEmp() {
                //     setErrorMsg(data.replace("*name*", item.role));
                //     setErrorMsg(data);
                setErrorMsg(
-                  "Record of Department: (" +
-                     departmentName +
-                     ") for Username: (" +
+                  "(" +
                      emp.userEntity.username +
-                     ") has been deleted"
+                     ") has been removed from Department (" +
+                     departmentName +
+                     ")"
+                  // "Record of Department: (" +
+                  //    departmentName +
+                  //    ") for Username: (" +
+                  //    emp.userEntity.username +
+                  //    ") has been deleted"
                );
+               setError("successGreen");
                refreshEmpList();
                // refreshUserList();
                //     getAllDataFromDB();
@@ -293,13 +296,13 @@ export default function ManageDepartmentEmp() {
    }
    return (
       <div className="app">
-         
          <br />
          <select
-         className="depselect"
+            className="depselect2"
             defaultValue=""
             // onChange={(e) => setSelectedRole(e.target.value)}>
-            onChange={(e) => findEmpHandler2(e)}>
+            onChange={(e) => findEmpHandler2(e)}
+         >
             <option value="" disabled>
                Select Department
             </option>
@@ -317,11 +320,24 @@ export default function ManageDepartmentEmp() {
          {/* <button type="button" onClick={() => findEmpHandler()}>
             Search
          </button> */}
-         {errorMsg}
-         <br/>
+         {errorMsg !== "" && (
+            <div className="error_div">
+               <p className={[error]}>{errorMsg}</p>
+            </div>
+         )}
+
          {searched && (
             <div>
-               <table>
+               <table
+                  className="deplisttable"
+                  style={{
+                     width: "800px",
+                     height: "100px",
+                     maxWidth: "800px",
+                     maxHeight: "800px",
+                     overflowY: "scroll",
+                  }}
+               >
                   <thead>
                      <tr>
                         <th>Username</th>
@@ -340,6 +356,7 @@ export default function ManageDepartmentEmp() {
                            <td>{emp.email}</td>
                            <td>
                               <button
+                                 className="del_dep"
                                  type="Button"
                                  onClick={() => delHandler(emp)}
                               >
