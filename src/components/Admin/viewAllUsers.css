@@ -36,9 +36,11 @@ table tr:nth-child(even) {
    /* width: 100%; */
    border: 2px rgb(255, 255, 255) solid;
    border-radius: 10px;
-   max-height: 500px;
+   max-height: 100px;
+   
    overflow-x: scroll;
    overflow-y: scroll;
+   
 }
 
 th {
@@ -124,6 +126,7 @@ tbody tr:hover {
       url("https://images.pexels.com/photos/114979/pexels-photo-114979.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500");
    background-size: cover;
    background-position: center;
+   z-index: 1;
 }
 
 .allusers {

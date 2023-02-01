@@ -171,7 +171,7 @@ function UserCP(props) {
                Change Password
             </button>
 
-            {"   " + errorMsg}
+            <div className="cp_error">{errorMsg}</div>
          </form>
       </div>
    );

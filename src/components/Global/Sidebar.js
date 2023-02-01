@@ -82,7 +82,7 @@ export default function Sidebar(props) {
           ? (
             <>
                <a href="/viewalluser">
-                  <button>User List</button>
+                  <button>List of Employees</button>
                </a>
                <a href="/managedeplist">
                   <button>Department List</button>
@@ -114,7 +114,7 @@ export default function Sidebar(props) {
                   <button>My Details</button>
                </a>
                <a href="/usercp">
-                  <button>User CP</button>
+                  <button>Change Password</button>
                </a>
 
                <button onClick={() => logoutHandler()}>Log Out</button>

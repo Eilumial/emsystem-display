@@ -168,3 +168,8 @@ input {
    background-color: rgb(132, 153, 248);
    box-shadow: 0 0 0 3px white;
 }
+
+
+.cp_error{
+   margin-top: 10px;
+ }

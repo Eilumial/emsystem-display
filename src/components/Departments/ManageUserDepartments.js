@@ -91,6 +91,7 @@ function ManageUserDepartments() {
    const [roleInput, setRoleInput] = useState("");
    const [userEmail, setUserEmail] = useState("");
    const [error, setError] = useState("defaultMsg");
+   const [testArr, setTestArr] = useState(initUserList);
 
    useEffect(() => {
       const headers = {
@@ -157,15 +158,22 @@ function ManageUserDepartments() {
       })
          .then((res) => res.json())
          .then((data) => {
+            // setTestArr(data);
+            if(data[0].errorMessage===null){
             setUserList(data);
-            //   console.log("Before roles"+roles);
-            setRole(
-               userList[0].departments.map((department) => department.role)
-            );
+            // //   console.log("Before roles"+roles);
+            // setRole(
+            //    userList[0].departments.map((department) => department.role)
+            // );
             setSearched(true);
             setUserEmail(searchInput);
             setErrorMsg("Please select a Department");
             setError("defaultMsg");
+         }else{
+            
+            setErrorMsg(data[0].errorMessage);
+            setError("errorRed");
+         }
             //   console.log("After roles"+roles);
             //   setUserList(prevList=>[...prevList]);
             //   console.log("Before roles"+depList);
@@ -361,9 +369,9 @@ function ManageUserDepartments() {
                }}
             >
                <input
-                  type="email"
+                  type="text"
                   onChange={(e) => setSearchInput(e.target.value)}
-                  placeholder="Search by Employee Email"
+                  placeholder="Search by Employee Email or Username"
                   style={{ width: "300px", height: "30px" }}
                   required
                ></input>
@@ -371,6 +379,9 @@ function ManageUserDepartments() {
                   Search
                </button>
             </form>
+            <div className="error_div">
+                     <p className={[error]}>{errorMsg}</p>
+                  </div>
             {searched && (
                <>
                   <div className="pdetails">
@@ -382,9 +393,7 @@ function ManageUserDepartments() {
                   {/* <select> */}
 
                   {/* <p className={error ? "errorRed" : "successGreen"}>{errorMsg}</p> */}
-                  <div className="error_div">
-                     <p className={[error]}>{errorMsg}</p>
-                  </div>
+                  
                   <div>
                      <select
                         className="depselect"

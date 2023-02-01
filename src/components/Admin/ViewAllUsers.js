@@ -399,7 +399,7 @@ export const ViewAllUsers = () => {
                type="text"
                className="list_search"
                onChange={(e) => setSearchInput(e.target.value)}
-               placeholder="Search Employee List"
+               placeholder="Search List of Employees"
             ></input>
             <table className="alluserstable" cellPadding="10">
                <thead>
@@ -437,7 +437,7 @@ export const ViewAllUsers = () => {
                      //     item.userEntity.username.toLowerCase() !==
                      //     Cookies.get("username").toLowerCase()
                      // )
-
+                     .sort((a,b)=> a.userEntity.username.localeCompare(b.userEntity.username))
                      .filter(
                         (item) =>
                            item.first_name
@@ -622,7 +622,7 @@ export const ViewAllUsers = () => {
                                     Cookies.get("username").toLowerCase() &&
                                     !item.userEntity.roles.find(
                                        (role) => role.name === "ADMIN"
-                                    ) && (
+                                    ) ? (
                                        <button
                                           type="button"
                                           className="delete"
@@ -630,7 +630,7 @@ export const ViewAllUsers = () => {
                                        >
                                           Delete
                                        </button>
-                                    )}
+                                    ):("Admin")}
                               </td>
                               {item.userEntity.username.toLowerCase() !==
                                  Cookies.get("username").toLowerCase() &&

@@ -157,15 +157,20 @@ function ManageUserProjects() {
       })
          .then((res) => res.json())
          .then((data) => {
-            setUserList(data);
+            if (data[0].errorMessage === null) {
+               setUserList(data);
 
-            setName(
-               userList[0].projects.map((project) => project.project_name)
-            );
-            setSearched(true);
-            setUserEmail(searchInput);
-            setErrorMsg("Please select a Project");
-            setError("defaultMsg");
+               setName(
+                  userList[0].projects.map((project) => project.project_name)
+               );
+               setSearched(true);
+               setUserEmail(searchInput);
+               setErrorMsg("Please select a Project");
+               setError("defaultMsg");
+            } else {
+               setErrorMsg(data[0].errorMessage);
+               setError("errorRed");
+            }
          });
    }
 
@@ -212,7 +217,7 @@ function ManageUserProjects() {
                   setErrorMsg("Error: User already assigned to this project!");
                   setError("errorRed");
                }
-               
+
                //   getAllDataFromDB();
                // console.log(data);
                // const newArr = [...bookList];
@@ -336,9 +341,9 @@ function ManageUserProjects() {
                }}
             >
                <input
-                  type="email"
+                  type="text"
                   onChange={(e) => setSearchInput(e.target.value)}
-                  placeholder="Search by Employee Email"
+                  placeholder="Search by Employee Email or Username"
                   style={{ width: "300px", height: "30px" }}
                   required
                ></input>
@@ -346,6 +351,11 @@ function ManageUserProjects() {
                   Search
                </button>
             </form>
+
+            <div className="error_div">
+               <p className={[error]}>{errorMsg}</p>
+            </div>
+
             {searched && (
                <>
                   <div className="pdetails">
@@ -355,9 +365,7 @@ function ManageUserProjects() {
                   </div>
 
                   {/* <select> */}
-                  <div className="error_div">
-                     <p className={[error]}>{errorMsg}</p>
-                  </div>
+
                   <select
                      className="depselect"
                      defaultValue=""
@@ -424,7 +432,10 @@ function ManageUserProjects() {
                         <button onClick={() => editStatus(proj)}>Edit</button>
                       </td> */}
                                     <td>
-                                       <button className="del_dep" onClick={() => delHandler(proj)}>
+                                       <button
+                                          className="del_dep"
+                                          onClick={() => delHandler(proj)}
+                                       >
                                           Delete
                                        </button>
                                     </td>
